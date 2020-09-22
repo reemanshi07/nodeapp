@@ -1,0 +1,29 @@
+<script src="socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+  $(function () {
+    const socket = io();
+    let count = 0;
+    socket.emit('chat-message', 'welcome to socket demo ->');
+    const interval = setInterval(() => {
+    socket.emit('chat-message', 'count : ' + count);
+    count++;
+      if (count === 10) {
+        socket.emit('chat-message', 'I am done : ' + count);
+        clearInterval(interval);
+      }
+
+    }, 1000);
+
+    socket.on('chat', (data) => {
+      console.log(' chat : ', data)
+    });
+    // $('form').submit(function (e) {
+    //   e.preventDefault(); // prevents page reloading
+    //   socket.emit('chat-message', $('#m').val());
+    //   console.log('test msg :: ', $('#m').val())
+    //   $('#m').val('');
+    //   return false;
+    // });
+  });
+</script>
